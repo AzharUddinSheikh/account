@@ -24,19 +24,22 @@ const schema = z.object({
 function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(schema),
-  });
 
   const { token, isLoggedIn } = useSelector((state) => state.auth);
   const userData = useSelector((state) => state.user);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: userData,
+  });
+
   useEffect(() => {
-    console.log(userData);
+    reset(userData);
   }, [userData]);
 
   // use custom hook used multiple
@@ -65,35 +68,30 @@ function Profile() {
             type="email"
             errors={errors}
             register={register}
-            defaultValue={userData.email}
           />
           <InputField
             label="Name"
             id="name"
             errors={errors}
             register={register}
-            defaultValue={userData.name}
           />
           <InputField
             label="Mobile Number"
             id="mobile"
             errors={errors}
             register={register}
-            defaultValue={userData.mobileNumber}
           />
           <InputField
             label="City Name"
             id="city"
             errors={errors}
             register={register}
-            defaultValue={userData.city}
           />
           <InputField
             label="Company Name"
             id="company"
             errors={errors}
             register={register}
-            defaultValue={userData.company}
           />
           <Button type="submit">Update Profile</Button>
         </Form>
