@@ -32,3 +32,5 @@ export default authSlice.reducer;
 
 export const loginUser = (data) =>
   apiCallBegan(`${LOGIN_URL}`, loginSuccess.type, METHOD_POST, data);
+
+export const logoutUser = () => logout()

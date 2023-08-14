@@ -10,11 +10,21 @@ const api =
     next(action);
     const { url, method, data, onSuccess } = action.payload;
     try {
+      
+      // not a good idea
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
       const response = await axios.request({
         baseURL: "http://165.22.223.163/polymermis/",
         url: url,
         method: method,
-        data: data,
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       dispatch({ type: onSuccess, payload: response.data });
     } catch (error) {

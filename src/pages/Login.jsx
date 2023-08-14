@@ -5,8 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../components/common/Button";
 import InputField from "../components/common/InputField";
 import Form from "../components/Form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../store/authSlice";
 
 const schema = z.object({
   email: z.string().nonempty("Field Is Required").email("Email Is Not Valid"),
@@ -26,16 +27,19 @@ function Login() {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn); //
+  const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
     if (isUserLoggedIn) {
       navigate("/profile");
     }
-  }, []);
+  }, [isUserLoggedIn]);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    dispatch(loginUser(data));
+  };
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
