@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { METHOD_GET, METHOD_PUT } from "./http";
 import { apiCallBegan } from "./api";
 
-
 const GET_USERS_URL = "api/get-profile";
 
 const initialState = {
@@ -42,5 +41,6 @@ export default userDetailSlice.reducer;
 
 export const updateUser = (data) =>
   apiCallBegan(`${GET_USERS_URL}`, userUpdated.type, METHOD_PUT, data);
-export const userDetailed = (id) =>
-  apiCallBegan(`${GET_USERS_URL}`, userDetail.type, METHOD_GET);
+
+export const userDetailed = (token) =>
+  apiCallBegan(`${GET_USERS_URL}?token=${token}`, userDetail.type, METHOD_GET);

@@ -9,6 +9,7 @@ function App() {
     <>
       <NavBar />
       <Routes>
+        {/* Make Profile Route Protected */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />

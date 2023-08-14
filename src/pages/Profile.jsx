@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from "../components/Form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "../components/common/InputField";
 import Button from "../components/common/Button";
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userDetailed } from "../store/userSlice";
 
 const schema = z.object({
   email: z.string().nonempty("field is required").email("Email Is Not Valid"),
@@ -19,6 +22,8 @@ const schema = z.object({
 });
 
 function Profile() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -27,7 +32,22 @@ function Profile() {
     resolver: zodResolver(schema),
   });
 
+  const { token, isLoggedIn } = useSelector((state) => state.auth);
+
+  // use custom hook used multiple
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
+
   const onSubmit = (data) => console.log(data);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(userDetailed(token));
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="container">

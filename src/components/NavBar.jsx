@@ -22,11 +22,13 @@ function NavBar() {
                 {`${isLoggedIn ? "Logout" : "Login"}`}
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/profile">
-                Profile
-              </NavLink>
-            </li>
+            {isLoggedIn && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/profile">
+                  Profile
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>

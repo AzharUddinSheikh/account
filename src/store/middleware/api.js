@@ -10,7 +10,6 @@ const api =
     next(action);
     const { url, method, data, onSuccess } = action.payload;
     try {
-      
       // not a good idea
       const formData = new FormData();
       for (const key in data) {
@@ -22,9 +21,6 @@ const api =
         url: url,
         method: method,
         data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
       });
       dispatch({ type: onSuccess, payload: response.data });
     } catch (error) {
