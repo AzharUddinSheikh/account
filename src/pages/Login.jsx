@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../components/common/Button";
+import InputField from "../components/common/InputField";
+import Form from "../components/Form";
 
 const schema = z.object({
   email: z.string().nonempty("Field Is Required").email("Email Is Not Valid"),
@@ -25,38 +27,23 @@ function Login() {
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className="text-danger">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            {...register("password")}
-            type="password"
-            className="form-control"
-            id="password"
-          />
-          {errors.password && (
-            <p className="text-danger">{errors.password.message}</p>
-          )}
-        </div>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <InputField
+          label="Email"
+          id="email"
+          type="email"
+          errors={errors}
+          register={register}
+        />
+        <InputField
+          label="Password"
+          id="password"
+          type="password"
+          errors={errors}
+          register={register}
+        />
         <Button type="submit">Login</Button>
-      </form>
+      </Form>
     </div>
   );
 }
