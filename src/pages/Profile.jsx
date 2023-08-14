@@ -33,6 +33,11 @@ function Profile() {
   });
 
   const { token, isLoggedIn } = useSelector((state) => state.auth);
+  const userData = useSelector((state) => state.user);
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   // use custom hook used multiple
   useEffect(() => {
@@ -60,31 +65,35 @@ function Profile() {
             type="email"
             errors={errors}
             register={register}
+            defaultValue={userData.email}
           />
           <InputField
             label="Name"
             id="name"
             errors={errors}
             register={register}
+            defaultValue={userData.name}
           />
           <InputField
             label="Mobile Number"
             id="mobile"
-            type="text"
             errors={errors}
             register={register}
+            defaultValue={userData.mobileNumber}
           />
           <InputField
             label="City Name"
             id="city"
             errors={errors}
             register={register}
+            defaultValue={userData.city}
           />
           <InputField
             label="Company Name"
             id="company"
             errors={errors}
             register={register}
+            defaultValue={userData.company}
           />
           <Button type="submit">Update Profile</Button>
         </Form>

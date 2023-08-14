@@ -26,12 +26,13 @@ const userDetailSlice = createSlice({
       user.company = action.payload.company;
     },
     userDetail: (user, action) => {
-      user.email = action.payload.email;
-      user.name = action.payload.name;
-      user.mobileNumber = action.payload.mobileNumber;
-      user.city = action.payload.city;
-      user.state = action.payload.state;
-      user.company = action.payload.company;
+      const { data } = action.payload;
+      user.email = data.email;
+      user.name = data.name;
+      user.mobileNumber = data.mobile;
+      user.city = data.city;
+      user.state = data.state;
+      user.company = data.company;
     },
   },
 });
