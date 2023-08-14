@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../components/common/Button";
 import InputField from "../components/common/InputField";
 import Form from "../components/Form";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   email: z.string().nonempty("Field Is Required").email("Email Is Not Valid"),
@@ -22,6 +24,16 @@ function Login() {
   } = useForm({
     resolver: zodResolver(schema),
   });
+
+  const navigate = useNavigate();
+
+  const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn); //
+
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      navigate("/profile");
+    }
+  }, []);
 
   const onSubmit = (data) => console.log(data);
 
