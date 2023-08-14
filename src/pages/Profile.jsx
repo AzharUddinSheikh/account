@@ -7,7 +7,7 @@ import Button from "../components/common/Button";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userDetailed } from "../store/userSlice";
+import { updateUser, userDetailed } from "../store/userSlice";
 
 const schema = z.object({
   email: z.string().nonempty("field is required").email("Email Is Not Valid"),
@@ -49,7 +49,10 @@ function Profile() {
     }
   }, [isLoggedIn]);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    dispatch(updateUser(data, token));
+  };
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -88,8 +91,20 @@ function Profile() {
             register={register}
           />
           <InputField
+            label="State Name"
+            id="state"
+            errors={errors}
+            register={register}
+          />
+          <InputField
             label="Company Name"
             id="company"
+            errors={errors}
+            register={register}
+          />
+          <InputField
+            label="Country"
+            id="country"
             errors={errors}
             register={register}
           />

@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { METHOD_GET, METHOD_PUT } from "./http";
+import { METHOD_GET, METHOD_POST } from "./http";
 import { apiCallBegan } from "./api";
 
 const GET_USERS_URL = "api/get-profile";
+const UPDATE_USER_PROFILE = "api/update-profile";
 
 const initialState = {
   email: "",
@@ -24,6 +25,7 @@ const userDetailSlice = createSlice({
       user.city = action.payload.city;
       user.state = action.payload.state;
       user.company = action.payload.company;
+      user.country = action.payload.country;
     },
     userDetail: (user, action) => {
       const { data } = action.payload;
@@ -33,6 +35,7 @@ const userDetailSlice = createSlice({
       user.city = data.city;
       user.state = data.state;
       user.company = data.company;
+      user.country = data.country;
     },
   },
 });
@@ -40,8 +43,14 @@ const userDetailSlice = createSlice({
 export const { userUpdated, userDetail } = userDetailSlice.actions;
 export default userDetailSlice.reducer;
 
-export const updateUser = (data) =>
-  apiCallBegan(`${GET_USERS_URL}`, userUpdated.type, METHOD_PUT, data);
+export const updateUser = (data, token) => {
+  return apiCallBegan(
+    `${UPDATE_USER_PROFILE}?token=${token}`,
+    userUpdated.type,
+    METHOD_POST,
+    { ...data, country: 1, state: "MP" }
+  );
+};
 
 export const userDetailed = (token) =>
   apiCallBegan(`${GET_USERS_URL}?token=${token}`, userDetail.type, METHOD_GET);
